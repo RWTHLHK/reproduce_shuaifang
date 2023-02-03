@@ -42,16 +42,20 @@
 
 [Kernels]
     [./spatial]
-        type = DamageSpatialDistribution
+        type = DamageEvolution
         variable = d
-        l = 0.5
+        l = 0.005 # in mm
+        gc = 1e-3 #GPa
+        neta = 1e-6#s/GPa
+        delta = 0.0
+        theta0 = 30 #degree
     []
 []
 
 [Materials]
   [elasticity]
     type = ComputeIsotropicElasticityTensor
-    youngs_modulus = 4e3 #MPa
+    youngs_modulus = 4 #GPa
     poissons_ratio = 0.3
   []
   [stress]

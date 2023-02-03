@@ -1,6 +1,7 @@
 [GlobalParams]
   displacements = 'disp_x disp_y'
 []
+
 [Mesh]
     [./sample] # generate test sample geometry
         type = GeneratedMeshGenerator
@@ -24,12 +25,14 @@
         bottom_left = '0 0.5 0'
         top_right = '0.5 0.5 0'
     [../]
+
 []
 [Modules/TensorMechanics/Master]
   [all]
     add_variables = true
   []
 []
+
 [Variables]
     [./d] #damage variable
         order=FIRST
@@ -43,6 +46,17 @@
         variable = d
         l = 0.5
     []
+[]
+
+[Materials]
+  [elasticity]
+    type = ComputeIsotropicElasticityTensor
+    youngs_modulus = 4e3 #MPa
+    poissons_ratio = 0.3
+  []
+  [stress]
+    type = ComputeLinearElasticStress
+  []
 []
 
 [BCs]

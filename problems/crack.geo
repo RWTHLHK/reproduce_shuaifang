@@ -15,32 +15,36 @@ Line(1) = {1, 2};
 //+
 Line(2) = {2, 3};
 //+
-Line(3) = {4, 4};
+Line(3) = {3, 4};
 //+
-Line(4) = {3, 4};
+Line(4) = {4, 5};
 //+
-Line(5) = {4, 5};
+Line(5) = {5, 1};
 //+
-Line(6) = {5, 1};
+Line(6) = {5, 6};
 //+
 Line(7) = {5, 6};
 //+
-Curve Loop(1) = {6, 1, 2, 4, 5};
+Curve Loop(1) = {1, 2, 3, 4, 6, -7, 5};
 //+
 Plane Surface(1) = {1};
 //+
 Physical Curve("bottom", 8) = {1};
 //+
-Physical Curve("top", 9) = {4};
+Physical Curve("top", 9) = {3};
 //+
 Physical Curve("right", 10) = {2};
 //+
-Physical Curve("left1", 11) = {5};
+Physical Curve("left1", 11) = {4};
 //+
-Physical Curve("left2", 12) = {6};
+Physical Curve("left2", 12) = {5};
 //+
-Physical Curve("crack_interface1", 13) = {7};
+Physical Curve("crack_interface1", 13) = {6};
 //+
-Transfinite Curve {1, 2, 4} = 101 Using Progression 1;
+Physical Curve("crack_interface2", 14) = {7};
 //+
-Transfinite Curve {5, 6} = 51 Using Progression 1;
+Physical Surface("block", 0) = {1};
+//+
+Transfinite Curve {1, 2, 3} = 101 Using Progression 1;
+//+
+Transfinite Curve {4, 5} = 51 Using Progression 1;

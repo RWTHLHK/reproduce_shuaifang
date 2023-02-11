@@ -1,6 +1,27 @@
+#This input uses PhaseField-Nonconserved Action to add phase field fracture bulk rate kernels
 [Mesh]
-  type = FileMesh
-  file = test.msh
+  [sample] # generate test sample geometry
+    type = GeneratedMeshGenerator
+    dim = 2
+    elem_type = QUAD4
+    nx = 100
+    ny = 100
+    nz = 0
+    xmin = 0
+    xmax = 1
+    ymin = 0
+    ymax = 1
+    zmin = 0
+    zmax = 0
+  []
+
+  [crack] # generate crack geometry to add BC
+    type = BoundingBoxNodeSetGenerator
+    input = sample
+    new_boundary = 'crack_line'
+    bottom_left = '0 0.5 0'
+    top_right = '0.5 0.5 0'
+  []
 []
 
 [GlobalParams]
@@ -52,17 +73,22 @@
 []
 
 [BCs]
-  [xdisp]
+  [ydisp]
     type = FunctionDirichletBC
     variable = disp_x
     boundary = top
     function = 't'
   []
-
+  [initial_crack]
+    type = ADDirichletBC
+    variable = c
+    boundary = crack_line
+    value = 1
+  []
   [xfix]
     type = DirichletBC
     variable = disp_x
-    boundary = bottom
+    boundary = 'bottom crack_line'
     value = 0
   []
   [yfix]
@@ -133,12 +159,12 @@
   [resid_x]
     type = NodalSum
     variable = resid_x
-    boundary = top
+    boundary = 2
   []
   [resid_y]
     type = NodalSum
     variable = resid_y
-    boundary = top
+    boundary = 2
   []
 []
 
@@ -161,7 +187,7 @@
   nl_max_its = 20
 
   dt = 1e-4
-  end_time = 0.1
+  end_time = 0.015
   [Adaptivity]
     coarsen_fraction = 0.1
     refine_fraction = 0.7
